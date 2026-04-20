@@ -1,29 +1,28 @@
-%include "../LIB/pc_iox.inc"  	; incluir declaraciones de procedimiento externos
-								; que se encuentran en la biblioteca libpc_io.a
+%include "../LIB/pc_iox.inc"
 
-section	.text
-	global _start       ;referencia para inicio de programa
-	
-_start:    
+section .text
+global _start
 
-;a
+_start:
 
-	MOV eax,0x22446688
-    call pHex_dw
+    MOV eax,0x22446688
 
-    MOV al,10 	; cambio de linea
-	call putchar
-    
-    ROL eax,28
-    call pHex_dw
+push eax
+call pHex_dw
+pop eax
 
-     MOV al,10 	; cambio de linea
-	call putchar
+MOV al,10
+call putchar
 
-;b
+ROR eax,4
 
-    
-section	.data
+push eax
+call pHex_dw
+pop eax
 
+MOV al,10
+call putchar
 
-
+    mov eax,1
+    mov ebx,0
+    int 0x80
