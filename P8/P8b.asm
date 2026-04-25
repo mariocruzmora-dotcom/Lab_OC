@@ -10,16 +10,12 @@ _start:
 leer: call getche 
 cmp al,'0'
 jb leer
-cmp al,'9'
+cmp al,'Z'
 ja leer
-cmp al, '0'
-jae num
-                cmp al,'A'
-                jb leer
-                cmp al,'Z'
-                ja leer
-                cmp cl, 'A'
-                jae letra
+cmp al,'A'
+jb leer
+cmp al,'9'
+jb leer            
 
 num:  mov edx,msg
       call puts
