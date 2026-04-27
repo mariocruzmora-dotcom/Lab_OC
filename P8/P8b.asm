@@ -1,34 +1,40 @@
 %include "../LIB/pc_iox.inc"
 
+section .data
+msgNum db "Es un numero",0
+msgLet db "Es una letra",0
+
 section .text
-msg db "Es un numero",0
-msg1 db "Es una letra",0
 global _start
 
 _start:
 
-leer: call getche 
-cmp al,'0'
-jb leer
-cmp al,'Z'
-ja leer
-cmp al,'A'
-jb leer
-cmp al,'9'
-jb leer            
+leer:
+    call getche
 
-num:  mov edx,msg
-      call puts
-      mov eax,1
-      mov ebx,0
-      int 80h
+    cmp al,'0'
+    jb leer
+    cmp al,'Z'
+    ja leer
 
-letra:mov edx,msg1
-      call puts
-      mov eax,1
-      mov ebx,0
-      int 80h
+    cmp al,'9'
+    jbe num
 
+    cmp al,'A'
+    jae letra
 
-MOV al,10
-call putchar
+    jmp leer
+
+num:
+    mov edx,msgNum
+    call puts
+    jmp fin
+
+letra:
+    mov edx,msgLet
+    call puts
+
+fin:
+    mov eax,1
+    mov ebx,0
+    int 80h
