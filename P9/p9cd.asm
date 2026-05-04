@@ -1,44 +1,13 @@
 %include "../LIB/pc_iox.inc"
 
-section .bss
-vector1 resb 10
-vector2 resb 10
+section .data
+vector1 db 1,2,3,4,5
+vector2 db 5,4,3,2,1
 
 section .text
 global _start
 
 _start:
-
-    mov ecx, 5
-    mov ebx, vector1
-
-leer1:
-    call getche
-    cmp al,'0'
-    jb leer1
-    cmp al,'9'
-    ja leer1
-
-    sub al,30h
-    mov [ebx], al
-    inc ebx
-    loop leer1
-
-    mov ecx, 5
-    mov ebx, vector2
-
-leer2:
-    call getche
-    cmp al,'0'
-    jb leer2
-    cmp al,'9'
-    ja leer2
-
-    sub al,30h
-    mov [ebx], al
-    inc ebx
-    loop leer2
-
     mov ebx, vector1
     mov edx, vector2
     mov ecx, 5
@@ -52,6 +21,7 @@ leer2:
     mov ebx,0
     int 80h
 
+
 suma_vectores:
 sig1:
     mov al, [ebx]
@@ -61,9 +31,9 @@ sig1:
 
     inc ebx
     inc edx
-
     loop sig1
     ret
+
 
 desplegar:
 sig2:

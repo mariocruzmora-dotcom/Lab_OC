@@ -1,31 +1,12 @@
 %include "../LIB/pc_iox.inc"
 
 section .data
-msgLet db "Capura x",0
-
-section .bss
-vector resb 10
+vector db 1,2,3,4,5
 
 section .text
 global _start
 
 _start:
-    mov ecx, 5
-    mov ebx, vector
-
-leer:
-    call getche
-    cmp al,'0'
-    jb leer
-    cmp al,'9'
-    ja leer
-
-    sub al,30h
-    mov [ebx], al
-    inc ebx
-
-    loop leer
-
     mov ecx, 5
     mov ebx, vector
     call desplegar
@@ -36,11 +17,18 @@ leer:
 
 desplegar:
 sig:
+    push ecx
+    push ebx
+
     mov al, [ebx]
     mov dl, al
     xor eax, eax
     mov al, dl
     call pHex_w
+
+    pop ebx
+    pop ecx
+
     inc ebx
     loop sig
     ret
