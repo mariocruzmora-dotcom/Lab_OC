@@ -3,6 +3,8 @@
 section .data
 msgLet db "Capura x",0
 
+section .bss
+vector resb 10
 
 section .text
 global _start
@@ -10,21 +12,25 @@ global _start
 _start:
 ecoN:
     mov ecx, 5
-
+    mov ebx, vector
 leer:
     call getche
 
-    cmp eax,'0'
+    cmp al,'0'
     jb leer
-    cmp eax,'9'
-    jbe conversion
-
-    jmp leer
+    cmp al,'9'
+    ja leer
 
 conversion:
     
-    sub eax,30h
-    mov ebx, eax
+    sub al,30h
+
+    mov [ebx], al
+    inc ebx
+    mov dl, al
+    xor eax, eax
+    mov al, dl
+    call pHex_w
     jmp ciclo
 
 ciclo: 
@@ -32,9 +38,7 @@ ciclo:
     ;mov edx,msgLet
     ;call puts
 
-    sub ecx, 1
-    cmp ecx, 0
-    ja leer
+    loop leer
 
     jmp fin
 

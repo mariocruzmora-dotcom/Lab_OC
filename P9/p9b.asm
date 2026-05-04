@@ -10,44 +10,37 @@ section .text
 global _start
 
 _start:
-ecoN:
     mov ecx, 5
     mov ebx, vector
+
 leer:
     call getche
-
     cmp al,'0'
     jb leer
     cmp al,'9'
     ja leer
 
-conversion:
-    
     sub al,30h
-
     mov [ebx], al
     inc ebx
-    mov dl, al
-    xor eax, eax
-    mov al, dl
-    call pHex_w
-    jmp ciclo
-
-ciclo: 
-
-    ;mov edx,msgLet
-    ;call puts
 
     loop leer
 
-    jmp fin
-
-fin:
-
+    mov ecx, 5
+    mov ebx, vector
+    call desplegar
 
     mov eax,1
     mov ebx,0
     int 80h
 
-
-    
+desplegar:
+sig:
+    mov al, [ebx]
+    mov dl, al
+    xor eax, eax
+    mov al, dl
+    call pHex_w
+    inc ebx
+    loop sig
+    ret
